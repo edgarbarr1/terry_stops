@@ -3,8 +3,8 @@ import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.linear_model import LogisticRegression, Ridge, Lasso, LinearRegression, LassoCV
-from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_validate
 from sklearn.metrics import (confusion_matrix, plot_confusion_matrix, f1_score, 
                              roc_curve, mean_squared_error, auc, recall_score, precision_score)
 from imblearn.over_sampling import SMOTE
@@ -14,7 +14,7 @@ from sklearn.feature_selection import VarianceThreshold, RFE, RFECV
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.compose import make_column_transformer, make_column_selector
 from sklearn.neighbors import KNeighborsClassifier
-
+from sklearn.svm import SVC
 
 
 
@@ -76,3 +76,20 @@ def roc_auc_plot(X_train, y_train, X_pred, y_pred, logreg):
     plt.title('Receiver operating characteristic (ROC) Curve')
     plt.legend(loc='lower right')
     plt.show()
+    
+
+def feature_plot(transformer, gridsearch, X):
+    """Returns feature importances of the best estimator of a gridsearch."""
+    transformer.transform(X)
+    features = list(gridsearch.best_estimator_[0].transformers_[0][1].get_feature_names())+list(X.select_dtypes('number').columns)
+    importances = gridsearch.best_estimator_[1].feature_importances_
+    sorted_importances = sorted(list(zip(features, importances)),key=lambda x: x[1], reverse=True)[:25]
+    x = [val[0] for val in sorted_importances]
+    y = [val[1] for val in sorted_importances]
+    plt.figure(figsize=(20,6))
+    plt.bar(x, y)
+    plt.xticks(rotation=90)
+#     plt.savefig('Feature_Imp',  bbox_inches ="tight",\
+#                 pad_inches = .25, transparent = False)
+    plt.show()
+ 
