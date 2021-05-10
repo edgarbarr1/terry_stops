@@ -18,12 +18,13 @@ from sklearn.svm import SVC
 
 
 
-def plot_cf(model, x_train_data, y_train_data, x_test_data, y_test_data):
+def plot_cf(model, x_train_data, y_train_data, x_test_data, y_test_data,file_name):
     fig, (ax1,ax2) = plt.subplots(ncols=2, figsize=(10,6))
     plot_confusion_matrix(model, x_train_data, y_train_data, cmap=plt.cm.magma, ax=ax1)
     plot_confusion_matrix(model, x_test_data, y_test_data, cmap=plt.cm.magma, ax=ax2)
     ax1.set_title('Training Data', size=20)
     ax2.set_title('Testing Data', size=20)
+    plt.savefig('../images/{}'.format(file_name), dpi=100)
     return plt.show()
 
 def find_best_k(X_train, y_train, X_test, y_test, min_k=1, max_k=25):
@@ -55,7 +56,7 @@ def scores(y_true_train, y_pred_train, y_true_test, y_pred_test):
     print('Precision score for testing data: {}'.format(precision_score(y_true_test, y_pred_test)))
 
     
-def roc_auc_plot(X_train, y_train, X_pred, y_pred, logreg):
+def roc_auc_plot(X_train, y_train, X_pred, y_pred, logreg,file_name):
     y_score = logreg.fit(X_train, y_train).decision_function(X_pred)
     fpr, tpr, thresholds = roc_curve(y_pred, y_score)
     
@@ -75,6 +76,7 @@ def roc_auc_plot(X_train, y_train, X_pred, y_pred, logreg):
     plt.ylabel('True Positive Rate')
     plt.title('Receiver operating characteristic (ROC) Curve')
     plt.legend(loc='lower right')
+    plt.savefig('../images/{}'.format(file_name))
     plt.show()
     
 

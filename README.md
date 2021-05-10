@@ -74,7 +74,7 @@ The following were the evaluation metrics generated:
 - Precision score for testing data: 0.8598592888381822
 
 **Confusion Matrix**
-
+![image1]()
 
 
 Overall solid scores. There was no sign of the model overfitting or underfitting. However, it was important to see if the model could be improved to give a better score on the metric.
