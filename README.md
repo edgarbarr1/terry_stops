@@ -82,6 +82,7 @@ The following were the evaluation metrics generated:
 Overall solid scores. There was no sign of the model overfitting or underfitting. However, it was important to see if the model could be improved to give a better score on the metric.
 
 **ROC Curve**
+
 ![image2](https://github.com/edgarbarr1/terry_stops/blob/main/images/ROC_curve_1.png)
 
 AUC score: 0.9014
